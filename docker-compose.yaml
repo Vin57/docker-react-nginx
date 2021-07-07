@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+    client:
+        build: .
+        ports:
+            - 3000:3000
+        volumes:
+            - type: volume
+              target: /app/node_modules
+            - type: bind
+              source: ./src
+              target: /app/src
+    test:
+        build: .
+        volumes:
+            - type: volume
+              target: /app/node_modules
+            - type: bind
+              source: ./src
+              target: /app/src
+        restart: unless-stopped
+        stdin_open: true
+        tty: true
+        command: ["npm", "run", "test"] 
+    
